@@ -56,15 +56,23 @@ d3.csv("data.csv").then(function(data) {
         .attr("r", "15")
         .attr("fill", "blue")
         .attr("opacity", ".5");
-    circlesGroup.append("text")
-        .style("text-anchor", "middle")
-        .classed("stateText", true)
-        .attr("dy", function (d) { return 15 - 10 })
-        .text(d => d.abbr)
+    
+
+    var text= svg.selectAll("text")
+        .data(data)
+        .enter()
+        .append("text");
+
+    var textLabels = text
+        .attr("x", function(data) {return xLinearScale(data.healthcare +1.3);})
+        .attr("y", function(data) {return yLinearScale(data.poverty +.1);})
+        .text(function(data) {return data.abbr})
+        .attr("font-size", "12px")
+        .attr("fill", "white");
         
       chartGroup.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", -10)
+        .attr("y", 0 - (margin.left + 40))
         .attr("x", 0 - (chartHeight))
         .attr("dy", "1em")
         .attr("class", "axisText")
